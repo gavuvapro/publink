@@ -1,0 +1,41 @@
+# Publink — Fly.io deployment configuration.
+# Docs: https://fly.io/docs/reference/configuration/
+#
+# The app name must be unique on Fly. If "publink" is taken, pick another
+# name here (e.g. "publink-demo") and create it first:
+#   flyctl apps create <name>
+app = "publink"
+primary_region = "iad"
+
+[build]
+  dockerfile = "Dockerfile"
+
+# Demo profile served at runtime. Edit freely or override with flyctl secrets.
+[env]
+  META_TITLE = "Publink Demo"
+  META_DESCRIPTION = "Publink — a lightweight, self-hosted link-in-bio page"
+  META_AUTHOR = "Publink"
+  META_KEYWORDS = "publink, link-in-bio, self-hosted"
+  META_INDEX_STATUS = "all"
+  LANG = "en"
+  THEME = "Dark"
+  NAME = "Publink"
+  BIO = "A lightweight, self-hosted link-in-bio page, live on Fly.io."
+  FOOTER = "Powered by Publink"
+  GITHUB = "https://github.com/gavuvapro/publink"
+  X = "https://x.com"
+
+# The Express server (server.ts) listens on PORT=3000 (see Dockerfile).
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+
+  [http_service.checks]
+    grace_period = "10s"
+    interval = "30s"
+    timeout = "5s"
+    method = "get"
+    path = "/healthcheck"

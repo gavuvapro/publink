@@ -223,6 +223,26 @@ docker run -d \
   ghcr.io/timothystewart6/littlelink-server:latest
 ```
 
+### Deploying to Fly.io
+
+A live demo deployment is included: [fly.toml](fly.toml) configures the app and `.github/workflows/fly-deploy.yml` deploys on every push to `main`.
+
+1. Create a free account at [fly.io](https://fly.io) and install [flyctl](https://fly.io/docs/hands-on/install-flyctl/).
+2. Create the app (must match the `app` name in `fly.toml`):
+
+    ```bash
+    flyctl auth login
+    flyctl apps create publink
+    ```
+
+3. Create a deploy token and add it as the `FLY_API_TOKEN` repository secret (Settings → Secrets and variables → Actions):
+
+    ```bash
+    flyctl tokens create deploy -x 999999h
+    ```
+
+4. Push to `main`. The workflow runs the CI checks and then deploys to <https://publink.fly.dev>. Edit the `[env]` section of `fly.toml` to change the demo profile.
+
 ### Using Kubernetes
 
 [Unofficial helm chart provided by k8s-at-home](https://github.com/k8s-at-home/charts/tree/master/charts/stable/littlelink-server)
