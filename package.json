@@ -16,7 +16,7 @@
     "typecheck": "yarn typegen && tsc --noEmit",
     "test:e2e": "yarn playwright test",
     "test:e2e:minimal": "bash e2e/minimal-env.sh",
-    "test": "node --experimental-vm-modules ./node_modules/.bin/jest --passWithNoTests --env=jsdom",
+    "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --passWithNoTests --env=jsdom",
     "lint": "eslint .",
     "lint:style": "stylelint ./src/**/*.css ./public/**/*.css",
     "lint:markdown": "markdownlint .github/*.md && markdownlint README.md CONTRIBUTING.md",
