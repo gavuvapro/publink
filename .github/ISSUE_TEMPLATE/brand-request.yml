@@ -1,0 +1,65 @@
+name: Brand Request
+description: Request a new brand or service button
+title: '[Brand]: '
+labels: ['Add Brand']
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form to request a new button. If you plan to open a pull request, read CONTRIBUTING.md for the expected implementation and validation steps.
+
+  - type: input
+    id: brand-name
+    attributes:
+      label: Brand Name
+      description: Enter the display name exactly as it should appear on the button.
+      placeholder: Google
+    validations:
+      required: true
+
+  - type: input
+    id: brand-url
+    attributes:
+      label: Brand Website
+      description: Link to the official website or profile service.
+      placeholder: https://www.google.com
+    validations:
+      required: true
+
+  - type: input
+    id: env-name
+    attributes:
+      label: Suggested Environment Variable Name
+      description: Use uppercase letters, numbers, and underscores. Leave blank if unsure.
+      placeholder: GOOGLE
+    validations:
+      required: false
+
+  - type: textarea
+    id: icon-source
+    attributes:
+      label: Icon or SVG Source
+      description: Link to an official SVG, brand guidelines, or icon source if available.
+      placeholder: https://www.svgrepo.com/show/355037/google.svg
+    validations:
+      required: false
+
+  - type: textarea
+    id: colors
+    attributes:
+      label: Brand Colors
+      description: Include official background and text colors if known.
+      placeholder: |
+        - Background: #000000
+        - Text: #ffffff
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Add links, screenshots, or examples that help verify the request.
+    validations:
+      required: false

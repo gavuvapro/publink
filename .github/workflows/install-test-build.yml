@@ -1,0 +1,55 @@
+name: Install, lint, typecheck, build
+
+on:
+  workflow_call:
+    inputs:
+      build-docker:
+        description: Whether to build and smoke-test the Docker image
+        type: boolean
+        required: false
+        default: false
+
+jobs:
+  node-checks:
+    name: Lint, typecheck, test, and build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Use Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: v24.18.0
+
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile --check-files --network-timeout 600000
+        env:
+          CI: true
+
+      - name: Run CI checks
+        run: yarn ci
+        env:
+          CI: true
+
+      - name: Build
+        run: yarn build
+        env:
+          CI: true
+
+      - name: Build Docker image
+        if: inputs.build-docker
+        run: docker build --tag publink:pr .
+
+      - name: Smoke test Docker image
+        if: inputs.build-docker
+        run: |
+          docker run --rm -d --name publink-pr -p 3100:3000 \
+            -e META_TITLE='PR Test' \
+            -e THEME=Dark \
+            publink:pr
+          trap 'docker stop publink-pr 2>/dev/null' EXIT
+          sleep 3
+          bash src/container-health-test.sh publink-pr
+          curl -s -o /dev/null -w "healthcheck: %{http_code}\\n" http://localhost:3100/healthcheck
+          curl -s -o /dev/null -w "root: %{http_code}\\n" http://localhost:3100/

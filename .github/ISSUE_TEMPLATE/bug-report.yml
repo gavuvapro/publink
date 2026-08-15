@@ -1,0 +1,80 @@
+name: Bug Report
+description: Report something that is broken or behaving unexpectedly
+title: '[Bug]: '
+labels: ['bug']
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug. Clear reproduction steps and environment details help maintainers and automation agents verify the issue quickly.
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: Describe the bug in one or two sentences.
+      placeholder: The page renders without the expected button when ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: List the smallest set of steps needed to trigger the issue.
+      placeholder: |
+        1. Set ...
+        2. Run ...
+        3. Open ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What should have happened?
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: What happened instead? Include logs, errors, or screenshots when useful.
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include the app version or image tag, Node version, browser, deployment type, and relevant non-secret env vars.
+      placeholder: |
+        - Image tag or commit:
+        - Node version:
+        - Browser:
+        - Deployment: Docker Compose, Docker, Kubernetes, local dev
+        - Relevant env vars:
+    validations:
+      required: true
+
+  - type: textarea
+    id: validation
+    attributes:
+      label: Validation Attempted
+      description: List any commands or checks already run. Use N/A if none.
+      placeholder: |
+        - yarn ci
+        - docker compose config
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Add screenshots, links, logs, or related issues. Do not include secrets.
+    validations:
+      required: false
